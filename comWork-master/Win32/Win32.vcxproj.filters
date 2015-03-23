@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MCore">
+      <UniqueIdentifier>{2088afb1-9010-4d5d-9d51-250ab3b8c1ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MCore\Frame">
+      <UniqueIdentifier>{6df99779-d57d-47d9-998a-3dd18376f103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemTest">
+      <UniqueIdentifier>{19721457-3ff4-413d-a1f2-89a8fd97124b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemTest\MainWnd">
+      <UniqueIdentifier>{41c8e1fd-7f1c-46e6-97ae-cf022563a060}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="winCore.h">
+      <Filter>MCore\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="winApp.h">
+      <Filter>MCore\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32.h">
+      <Filter>ItemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFram.h">
+      <Filter>ItemTest\MainWnd</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="winCore.cpp">
+      <Filter>MCore\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="winApp.cpp">
+      <Filter>MCore\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32.cpp">
+      <Filter>ItemTest</Filter>
+    </ClCompile>
+    <ClCompile Include="appModul.cpp">
+      <Filter>MCore</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFram.cpp">
+      <Filter>ItemTest\MainWnd</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Win32.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Win32.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

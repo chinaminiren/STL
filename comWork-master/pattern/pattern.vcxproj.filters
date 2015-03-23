@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{0d080abf-8184-4452-b57a-edd3918ee23a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\abstractFactory.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Adapter.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Bridge.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Builder.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\chain.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Command.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Composite.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Decorator.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Facade.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Factory.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\FlyWeight.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\inerprete.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Init.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Iterator.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Mediator.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\memento.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Observer.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Prototype.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Proxy .h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Single.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Sort.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\State.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\stdafx.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Strategy.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\targetver.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\TemplateMethod.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Tree.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\visitor.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pattern.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
