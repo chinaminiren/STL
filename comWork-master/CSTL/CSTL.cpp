@@ -55,6 +55,14 @@ private:
 //标准版：
 //void * operator new (std::size_t size) throw (std::bad_alloc);
 //void operator delete (void * pMemory，td::size_t size) throw();
+typedef char* newType;
+
+newType MyFunction()
+{
+	char* p = "asd";
+
+	return p;
+}
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -67,6 +75,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	new (ptr)std::string("123");
 	strAlloc.construct(ptr + 1, "456");
 
+	//trAlloc.allocate.address();
+
 	//
 	int memoryPtr[30];
 	MemoryTest* pTest = new(memoryPtr)MemoryTest(10);
@@ -75,6 +85,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//数组 相关
 	int* pArray = new int [10];
+
+	//--typedef 相关
 
 	return 0;
 }

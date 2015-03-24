@@ -61,39 +61,39 @@ int winApp::Run()
 	BOOL bIdle = TRUE;
 	LONG lIdleCount = 0;
 
-	/*for (;;)
-	{*/
-		//while (bIdle && !::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
-		//{
-		//	if (!OnIdle(lIdleCount++))
-		//	{
-		//		bIdle = FALSE;
-		//	}
-		//}
-
-		
-	/*	do
-		{*/
-			while (GetMessage(&msg, NULL, 0, 0))
+	for (;;)
+	{
+		while (bIdle && !::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+		{
+			if (!OnIdle(lIdleCount++))
 			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				bIdle = FALSE;
+			}
+		}
+		
+		do
+		{
+			if (!PumpMessage())
+			{
+				return ExitInstance();
 			}
 
+			//确定什么时候是  闲时？？？ TODO://
+			if (msg.message == WM_MOUSEMOVE || msg.message == WM_NCMOUSEMOVE)
+			{
+				//当产生重复的鼠标消息
+				bIdle = TRUE;
+				lIdleCount = 0;
+			}
+			else if (msg.message != WM_PAINT && msg.message != 0x0118)
+			{
+				bIdle = TRUE;
+				lIdleCount = 0;
+			}
 
-			//if (msg.message == WM_MOUSEMOVE || msg.message == WM_NCMOUSEMOVE)
-			//{
-			//	//当产生重复的鼠标消息
-			//	bIdle = TRUE;
-			//	lIdleCount = 0;
-			//}
-			//else if (msg.message != WM_PAINT && msg.message != 0x0118)
-			//{
-			//	bIdle = TRUE;
-			//	lIdleCount = 0;
-			//}
-		//} while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE));
-	/*}*/
+		} while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE));
+
+	}
 
 	return 0;
 }

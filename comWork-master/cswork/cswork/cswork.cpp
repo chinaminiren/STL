@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <unordered_map>
 #include "RHash.h"
 
 using namespace std;
@@ -368,24 +369,24 @@ void BM(char* meg, int M, char* str, int N)
 //简单图论相关
 
 
-int memcmp(const void* s1,const void* s2, size_t n)
-{
-	//
-	return 0;
-}
-int strcmp(const char* s1, const char* s2)
-{
-	//两个字符串自左向右逐个字符相比（按ASCII值大小相比较），
-	//直到出现不同的字符或遇'\0'为止
-	return 0;
-}
+//int memcmp(const void* s1,const void* s2, size_t n)
+//{
+//	//
+//	return 0;
+//}
+//int strcmp(const char* s1, const char* s2)
+//{
+//	//两个字符串自左向右逐个字符相比（按ASCII值大小相比较），
+//	//直到出现不同的字符或遇'\0'为止
+//	return 0;
+//}
 //
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	int ar[] = { -8, 8, -4, -5, -6 };
+	/*int ar[] = { -8, 8, -4, -5, -6 };
 
-	/*string meg("ABCDABD");
+	string meg("ABCDABD");
 	string str("BBCABCDABABCDABCDABDE");
 	KMP(meg.data(), meg.length(), str.data(), str.length());*/
 	// 0 1背包
@@ -410,10 +411,21 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 
-	//--Hash 
-	TestHashMap();
-	int key;
-	std::cin >> key;
+	//--Hash
+	//std::unordered_map<int, int> map;
+	//map.insert(std::make_pair(1, 1));
+	//map.insert(std::make_pair(1, 2));
+	{
+
+		HashMap<std::string, std::string> map;
+		bool bFlag = map.HashInsert("123", "CBC");
+		bFlag = map.HashInsert("234", "CBC");
+		bFlag = map.HashInsert("456", "CBC");
+
+	}
+
+	system("pause");
+
 	return 0;
 }
 
