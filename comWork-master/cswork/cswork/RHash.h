@@ -1,5 +1,8 @@
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
+#include <stack>
+
 #include <string>
 #include <cassert>
 
@@ -28,6 +31,8 @@ size_t Hash(const std::string& key)
 template<typename KeyType,typename ValueType>  
 class HashMap // -- 不能多个key 一样
 {
+
+//--内部对象
 private:
 	struct ValueItem
 	{
@@ -92,6 +97,7 @@ public:
 		size_t k = Hash(key);
 		int index = k % MAXHASHSIZE;
 
+		index = 1;
 		return index;
 	}
 
@@ -171,16 +177,51 @@ public:
         
 	}
 
-	bool HashSearch(const KeyType& key) //-- no result create default value
+	ValueType* HashSearch(const KeyType& key) //-- no result create default value
 	{
-		//
-		return false;
+		int index = HashKey(key);
+
+		ValueItem* pItem = m_pValueArray + index;
+		if (pItem->pKey == NULL)
+			return NULL;
+
+		while (pItem && pItem->pValue)
+		{
+			if (*(pItem->pKey) == key)
+			{
+				return pItem->pValue;
+			}
+
+			pItem = pItem->pNextValueItem;
+		}
+
+		return NULL;
 	}
 
-	bool HashDelete(const KeyType& key) // true success,false failure
+	void HashDelete(const KeyType& key) // true success,false failure
 	{
-		//deallocte memory
-		return false;
+		int index = HashKey(key);
+
+		ValueItem* pItem = m_pValueArray + index;
+
+		ValueItem* preItem = NULL;
+		while (pItem && pItem->pKey)
+		{
+			if (*(pItem->pKey) == key)
+			{
+				if (preItem)
+				{
+					preItem->pNextValueItem = pItem->pNextValueItem;
+				}
+				else //头指针
+				{
+					pItem->pKey = NULL;
+					delete(pItem->pValue);//release 内存
+				}
+			}
+			preItem = pItem;
+			pItem = pItem->pNextValueItem;
+		}
 	}
 
 private:

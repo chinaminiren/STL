@@ -412,15 +412,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 	//--Hash
-	//std::unordered_map<int, int> map;
-	//map.insert(std::make_pair(1, 1));
-	//map.insert(std::make_pair(1, 2));
 	{
 
 		HashMap<std::string, std::string> map;
 		bool bFlag = map.HashInsert("123", "CBC");
 		bFlag = map.HashInsert("234", "CBC");
 		bFlag = map.HashInsert("456", "CBC");
+		map.HashDelete("234");
+		std::string* ptrStr = map.HashSearch("234");
 
 	}
 
