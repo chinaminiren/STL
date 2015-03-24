@@ -431,7 +431,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		avlTree.Insert(233);
 		avlTree.Insert(223);
 		avlTree.Insert(3);
-		avlTree.Insert(236);
+	    avlTree.Insert(236);
 		avlTree.Insert(2);
 		avlTree.Insert(233);
 		avlTree.Insert(7);
@@ -439,6 +439,21 @@ int _tmain(int argc, _TCHAR* argv[])
 		avlTree.Insert(26);
 
 		avlTree.PrintAVLTree(avlTree.root);
+
+		std::cout << std::endl;
+
+		avlTree.DeleteNode(233);
+		avlTree.DeleteNode(236);
+		avlTree.DeleteNode(233);
+		avlTree.DeleteNode(7);
+		avlTree.PrintAVLTree(avlTree.root);
+		std::cout << std::endl;
+
+		avlTree.Insert(4);
+		avlTree.Insert(5);
+		avlTree.PrintAVLTree(avlTree.root);
+		std::cout << std::endl;
+
 
 	}
 

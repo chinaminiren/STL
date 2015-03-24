@@ -6,6 +6,8 @@
 #include <string>
 #include <cassert>
 
+//算法导论 11.2-4 题目需要做一下
+
 //--链接法
 #define MAXHASHSIZE 100
 

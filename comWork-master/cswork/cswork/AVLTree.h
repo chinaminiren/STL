@@ -44,10 +44,10 @@ public:
 
 	void PrintAVLTree(Node* pNode) //-- ÖÐÐò±éÀú
 	{
-		while (pNode)
+		if (pNode)
 		{
 			PrintAVLTree(pNode->_pLeft);
-			std::cout << pNode->_Value << std::endl; //
+			std::cout << pNode->_Value << " ";
 			PrintAVLTree(pNode->_pRight);
 		}
 	}
