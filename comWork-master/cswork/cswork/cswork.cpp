@@ -7,6 +7,7 @@
 #include <string>
 #include <unordered_map>
 #include "RHash.h"
+#include "AVLTree.h"
 
 using namespace std;
 
@@ -421,6 +422,11 @@ int _tmain(int argc, _TCHAR* argv[])
 		map.HashDelete("234");
 		std::string* ptrStr = map.HashSearch("234");
 
+	}
+
+	//-- AVLTree
+	{
+		AVLTree<int> avlTree;
 	}
 
 	system("pause");
