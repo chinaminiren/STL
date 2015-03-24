@@ -427,6 +427,19 @@ int _tmain(int argc, _TCHAR* argv[])
 	//-- AVLTree
 	{
 		AVLTree<int> avlTree;
+		avlTree.Insert(23);
+		avlTree.Insert(233);
+		avlTree.Insert(223);
+		avlTree.Insert(3);
+		avlTree.Insert(236);
+		avlTree.Insert(2);
+		avlTree.Insert(233);
+		avlTree.Insert(7);
+		avlTree.Insert(38);
+		avlTree.Insert(26);
+
+		avlTree.PrintAVLTree(avlTree.root);
+
 	}
 
 	system("pause");
