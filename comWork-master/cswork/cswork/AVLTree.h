@@ -11,7 +11,7 @@ private:
 			_pLeft(pLeft),									 //-- operaotr <  or less
 			_pRight(pRight),
 			_Value(Value),
-			_heigh(0)
+			_heigh(1)
 		{
 
 		}
@@ -50,6 +50,62 @@ public:
 			std::cout << pNode->_Value << " ";
 			PrintAVLTree(pNode->_pRight);
 		}
+	}
+
+	//--rotate
+	unsigned int height(Node* p)
+	{
+		return p ? p->_heigh : 0;
+	}
+
+	int bfactor(Node* p)
+	{
+		return height(p->_pLeft) - height(p->pRight);
+	}
+
+	void fixHeight(Node* p)
+	{
+		unsigned int hl = height(p->_pLeft);
+		unsigned int hr = height(p->_pRight);
+		p->_heigh = (hl > hr ? hl : hr) + 1;
+		
+	}
+	Node* RigthRotate(Node* p)
+	{
+		Node* q = p->_pLeft;
+		p->_pLeft = q->_pRight;
+		q->_pRight = p;
+
+		fixHeight(p);
+		fixHeight(q);
+		return q;
+	}
+
+	Node* LeftRotate(Node* q)
+	{
+		Node* p = q->_pRight;
+		q->_pRight = p->_pLeft;
+		p->_pLeft = q;
+
+		fixHeight(q);
+		fixHeight(p);
+		return p;
+	}
+
+	Node* banlance(Node* p)
+	{
+		fixHeight(p);
+		if (bfactor(p) == 2)  //left > right
+		{
+			//if (bfactor(p->))
+		}
+
+		if (bfactor(p) == -2) //right > left
+		{
+
+		}
+        
+		return p;
 	}
 
 	//--
