@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 
+//参考:http://kukuruku.co/hub/cpp/avl-trees
+//求树的最大高度
+//树的一些其它属性值相关
+
 template<typename Type>  //--其实 目前没有卫星数据 key == value
 class AVLTree
 {
@@ -97,12 +101,16 @@ public:
 		fixHeight(p);
 		if (bfactor(p) == 2)  //left > right
 		{
-			//if (bfactor(p->))
+			if (bfactor(p->_pLeft) < 0)
+				p->_pLeft = LeftRotate(p->_pLeft);
+			return RigthRotate(p);
 		}
 
 		if (bfactor(p) == -2) //right > left
 		{
-
+			if (bfactor(p->_pRight) > 0)
+				p->_pRight = RigthRotate(p->_pRight);
+			return LeftRotate(p);
 		}
         
 		return p;
@@ -128,6 +136,7 @@ public:
 					if (pCurNode->_pLeft == NULL)
 					{
 						pCurNode->_pLeft = nodeItem;
+
 						break;//end
 					}
 					else
@@ -211,3 +220,4 @@ private:
 public:
 	Node* root;
 };
+
