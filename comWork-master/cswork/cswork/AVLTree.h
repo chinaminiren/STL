@@ -64,7 +64,7 @@ public:
 
 	int bfactor(Node* p)
 	{
-		return height(p->_pLeft) - height(p->pRight);
+		return height(p->_pLeft) - height(p->_pRight);
 	}
 
 	void fixHeight(Node* p)
@@ -117,50 +117,26 @@ public:
 	}
 
 	//--
-	void Insert(const Type& keyValue)
+	Node* Insert(Node* nodeItem, const Type& keyValue)
 	{
-		Node* nodeItem = new Node(NULL, NULL, keyValue);
+		if (nodeItem == NULL)
+		{
+			Node* p = new Node(NULL, NULL, keyValue);
+			if (root == NULL)
+				root = p;
+			return p;
+		}
 
-		if (root == NULL)
-		{ 
-			root = nodeItem;
+		if (nodeItem->_Value > keyValue)
+		{
+			nodeItem->_pLeft = Insert(nodeItem->_pLeft, keyValue);
 		}
 		else
 		{
-			
-			Node* pCurNode = root;
-			while (pCurNode)
-			{
-				if (pCurNode->_Value > keyValue) //-- left
-				{
-					if (pCurNode->_pLeft == NULL)
-					{
-						pCurNode->_pLeft = nodeItem;
-
-						break;//end
-					}
-					else
-					{
-						pCurNode = pCurNode->_pLeft;
-					}
-				}
-				else
-				{
-				   //--right
-					if (pCurNode->_pRight == NULL)
-					{
-						pCurNode->_pRight = nodeItem;
-						break;//end
-					}
-					else
-					{
-						pCurNode = pCurNode->_pRight;
-					}
-				}
-			}
-			//reAVL
-
+			nodeItem->_pRight = Insert(nodeItem->_pRight, keyValue);
 		}
+
+		return banlance(nodeItem);
 	}
 
 	Type* Search(const Type& key)
@@ -207,17 +183,56 @@ public:
 			}
 		}
 	}
-	//--
-private:
-	int GetHeigh(Node* pNode)
-	{
-		int heigh = 0;
-		
-
-		return heigh;
-	}
 
 public:
 	Node* root;
 };
+
+/*
+void Insert(const Type& keyValue)
+{
+Node* nodeItem = new Node(NULL, NULL, keyValue);
+
+if (root == NULL)
+{
+root = nodeItem;
+}
+else
+{
+
+Node* pCurNode = root;
+while (pCurNode)
+{
+if (pCurNode->_Value > keyValue) //-- left
+{
+if (pCurNode->_pLeft == NULL)
+{
+pCurNode->_pLeft = nodeItem;
+
+break;//end
+}
+else
+{
+pCurNode = pCurNode->_pLeft;
+}
+}
+else
+{
+//--right
+if (pCurNode->_pRight == NULL)
+{
+pCurNode->_pRight = nodeItem;
+break;//end
+}
+else
+{
+pCurNode = pCurNode->_pRight;
+}
+}
+}
+//reAVL
+
+}
+}
+*/
 

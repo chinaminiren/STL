@@ -427,16 +427,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	//-- AVLTree
 	{
 		AVLTree<int> avlTree;
-		avlTree.Insert(23);
-		avlTree.Insert(233);
-		avlTree.Insert(223);
-		avlTree.Insert(3);
-	    avlTree.Insert(236);
-		avlTree.Insert(2);
-		avlTree.Insert(233);
-		avlTree.Insert(7);
-		avlTree.Insert(38);
-		avlTree.Insert(26);
+		avlTree.Insert(avlTree.root,23);
+		avlTree.Insert(avlTree.root, 233);
+		avlTree.Insert(avlTree.root, 223);
+		avlTree.Insert(avlTree.root, 3);
+		avlTree.Insert(avlTree.root, 236);
+		avlTree.Insert(avlTree.root, 2);
+		avlTree.Insert(avlTree.root, 233);
+		avlTree.Insert(avlTree.root, 7);
+		avlTree.Insert(avlTree.root, 38);
+		avlTree.Insert(avlTree.root, 26);
 
 		avlTree.PrintAVLTree(avlTree.root);
 
@@ -449,8 +449,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		avlTree.PrintAVLTree(avlTree.root);
 		std::cout << std::endl;
 
-		avlTree.Insert(4);
-		avlTree.Insert(5);
+		avlTree.Insert(avlTree.root, 4);
+		avlTree.Insert(avlTree.root, 5);
 		avlTree.PrintAVLTree(avlTree.root);
 		std::cout << std::endl;
 
