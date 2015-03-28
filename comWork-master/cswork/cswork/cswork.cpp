@@ -427,34 +427,32 @@ int _tmain(int argc, _TCHAR* argv[])
 	//-- AVLTree
 	{
 		AVLTree<int> avlTree;
-		avlTree.Insert(avlTree.root,23);
-		avlTree.Insert(avlTree.root, 233);
-		avlTree.Insert(avlTree.root, 223);
-		avlTree.Insert(avlTree.root, 3);
-		avlTree.Insert(avlTree.root, 236);
-		avlTree.Insert(avlTree.root, 2);
-		avlTree.Insert(avlTree.root, 233);
-		avlTree.Insert(avlTree.root, 7);
-		avlTree.Insert(avlTree.root, 38);
-		avlTree.Insert(avlTree.root, 26);
+		avlTree.InsertNode(1);
+		avlTree.InsertNode(232);
+		avlTree.InsertNode(53);
+		avlTree.InsertNode(54);
+		avlTree.InsertNode(55);
+		avlTree.InsertNode(6);
+		avlTree.InsertNode(57);
+		avlTree.InsertNode(86);
+		avlTree.InsertNode(9);
+		avlTree.InsertNode(10);
 
-		avlTree.PrintAVLTree(avlTree.root);
+		avlTree.Print();
 
 		std::cout << std::endl;
 
 		avlTree.DeleteNode(233);
-		avlTree.DeleteNode(236);
+		avlTree.DeleteNode(38);
 		avlTree.DeleteNode(233);
-		avlTree.DeleteNode(7);
-		avlTree.PrintAVLTree(avlTree.root);
+		avlTree.DeleteNode(75);
+		avlTree.Print();
 		std::cout << std::endl;
 
-		avlTree.Insert(avlTree.root, 4);
-		avlTree.Insert(avlTree.root, 5);
-		avlTree.PrintAVLTree(avlTree.root);
+		avlTree.InsertNode(46);
+		avlTree.InsertNode(52);
+		avlTree.Print();
 		std::cout << std::endl;
-
-
 	}
 
 	system("pause");

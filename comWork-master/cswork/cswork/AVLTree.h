@@ -46,6 +46,11 @@ public:
 		delete root;
 	}
 
+	void Print()
+	{
+		this->PrintAVLTree(this->root);
+	}
+
 	void PrintAVLTree(Node* pNode) //-- 中序遍历
 	{
 		if (pNode)
@@ -117,14 +122,16 @@ public:
 	}
 
 	//--
+	void InsertNode(const Type& keyValue)
+	{
+		this->root = Insert(this->root, keyValue);
+	}
+
 	Node* Insert(Node* nodeItem, const Type& keyValue)
 	{
 		if (nodeItem == NULL)
 		{
-			Node* p = new Node(NULL, NULL, keyValue);
-			if (root == NULL)
-				root = p;
-			return p;
+			return new Node(NULL, NULL, keyValue);
 		}
 
 		if (nodeItem->_Value > keyValue)
@@ -165,26 +172,63 @@ public:
 
 	void DeleteNode(const Type& key)
 	{
-		Node* pCurNode = root;
-		while (pCurNode)
-		{
-			if (pCurNode->_Value == key) //-- key == value
-			{
-				//delete node
-				break;
-			}
-			else if (pCurNode->_Value < key)
-			{
-				pCurNode = pCurNode->_pRight;
-			}
-			else
-			{
-				pCurNode = pCurNode->_pLeft;
-			}
-		}
+		this->root = Delete(this->root, key);
 	}
 
-public:
+	Node* Delete(Node* p, const Type& key)
+	{
+		if (p == NULL)
+			return NULL;
+
+		if (p->_Value > key)
+			p->_pLeft = Delete(p->_pLeft, key);
+		else if (p->_Value < key)
+			p->_pRight = Delete(p->_pRight, key);
+		//--value == key
+		else
+		{
+			Node* q = p->_pLeft;
+			Node* r = p->_pRight;
+			delete p; //free memory
+			if (r == NULL)  //
+			{
+				return q; //--递归返回的时候 banlance  ---- 1 
+			}
+			//
+			Node* pmin = FindMiniNode(r); //--find right sub tree min node
+			assert(pmin);
+
+			pmin->_pLeft = q;
+			pmin->_pRight = RemoveMinNode(r);
+
+			return banlance(pmin);
+		}
+		return banlance(p);
+	}
+
+	Node* RemoveMinNode(Node* p) //
+	{
+		assert(p);
+
+		if (p->_pLeft == NULL)
+			return p->_pRight; // possible |be likely to  return NULL --3
+
+		p->_pLeft = RemoveMinNode(p->_pLeft); // --  2
+
+		return banlance(p);
+	}
+
+	Node* FindMiniNode(Node* p)
+	{
+		assert(p);
+
+		if (p->_pLeft == NULL)
+			return p;
+		else
+			return FindMiniNode(p->_pLeft);
+	}
+
+private:
 	Node* root;
 };
 
