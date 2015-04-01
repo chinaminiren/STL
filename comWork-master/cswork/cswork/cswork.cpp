@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "RHash.h"
 #include "AVLTree.h"
+#include "RBTree.h"
 
 using namespace std;
 
@@ -426,6 +427,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//-- AVLTree
 	{
+		/*
 		AVLTree<int> avlTree;
 		avlTree.InsertNode(1);
 		avlTree.InsertNode(232);
@@ -453,11 +455,29 @@ int _tmain(int argc, _TCHAR* argv[])
 		avlTree.InsertNode(52);
 		avlTree.Print();
 		std::cout << std::endl;
+		*/
 	}
 
 	//--RBTree
 	{
+		RBTree<int> rbTree;
+		rbTree.Insert(1);
+		rbTree.Insert(232);
+		rbTree.Insert(53);
+		rbTree.Insert(54);
+		rbTree.Insert(55);
+		rbTree.Insert(6);
+		rbTree.Insert(57);
+		rbTree.Insert(86);
+		rbTree.Insert(9);
+		rbTree.Insert(10);
+		rbTree.Insert(255);
+		rbTree.Insert(62);
+		rbTree.Insert(-17);
 
+		rbTree.PrintTree();
+
+		std::cout << std::endl;
 	}
 
 	system("pause");
