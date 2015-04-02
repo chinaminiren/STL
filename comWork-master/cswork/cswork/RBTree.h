@@ -213,7 +213,7 @@ public:
 			else //--pu == null or pu.colorType ==eBlack is same case because  nil 
 			{
 				pg->colorType = eRed;
-				pf->colorType = eBlack;
+				p->colorType = eBlack;
 
 				if (pf == pg->left) 
 				{
