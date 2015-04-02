@@ -149,7 +149,7 @@ public:
 	Type* Search(const Type& key)
 	{
 		Type* pItem = NULL;
-
+		 
 		Node* pCurNode = root;
 		while (pCurNode)
 		{
@@ -204,6 +204,13 @@ public:
 			return banlance(pmin);
 		}
 		return banlance(p);
+	}
+	
+	Node* GetMiniValueNode(Node* p)
+	{
+		if (p == NULL)
+			return p;
+		return GetMiniValueNode(p->_pLeft);
 	}
 
 	Node* RemoveMinNode(Node* p) //

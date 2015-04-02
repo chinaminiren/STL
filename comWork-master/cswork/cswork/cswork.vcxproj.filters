@@ -30,6 +30,9 @@
     <ClInclude Include="RBTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SomeHeader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

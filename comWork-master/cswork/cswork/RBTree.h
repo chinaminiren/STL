@@ -212,21 +212,36 @@ public:
 			}
 			else //--pu == null or pu.colorType ==eBlack is same case because  nil 
 			{
-				pg->colorType = eRed;
-				p->colorType = eBlack;
-
 				if (pf == pg->left) 
 				{
 					if (p == pf->right)
+					{
+						p->colorType = eBlack;
 						LeftRotation(pf);
+					}
+					else
+					{
+						pf->colorType = eBlack;
+					}
+						
 					RightRotation(pg);
 				}
 				else if (pf == pg->right)
 				{
 					if (p == pf->left)
+					{
+						p->colorType = eBlack;
 						RightRotation(pf);
+					}
+					else
+					{
+						pf->colorType = eBlack;
+					}
+						
 					LeftRotation(pg);
 				}
+
+				pg->colorType = eRed;
 			}
 		}
 		else
