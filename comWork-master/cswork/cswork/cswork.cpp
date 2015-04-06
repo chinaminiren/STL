@@ -12,7 +12,7 @@
 
 using namespace std;
 
-
+//需要做的 工作:http://www.csdn.net/article/2011-05-06/297285
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -70,17 +70,42 @@ int _tmain(int argc, _TCHAR* argv[])
 		rbTree.Insert(54);
 		rbTree.Insert(55);
 		rbTree.Insert(6);
-		rbTree.Insert(57);
-		rbTree.Insert(86);
+		rbTree.Insert(7);
+		rbTree.Insert(6);
 		rbTree.Insert(9);
-		rbTree.Insert(10);
-		rbTree.Insert(255);
+		rbTree.Insert(0);
+		rbTree.Insert(5);
 	    rbTree.Insert(62);
-	    rbTree.Insert(-17);
+	    rbTree.Insert(4);
+		rbTree.Insert(53); 
+		rbTree.Insert(91);
+		rbTree.Insert(10);
+		rbTree.Insert(25);
+		rbTree.Insert(612);
+		rbTree.Insert(-317);
+		rbTree.Insert(38);
 
 		rbTree.PrintTree();
-
 		std::cout << std::endl;
+
+		rbTree.Delete(53);
+		rbTree.Delete(232);
+		rbTree.Delete(55);
+		rbTree.Insert(170);
+		rbTree.Delete(86);
+		rbTree.Insert(170);
+
+		rbTree.PrintTree();
+		std::cout << std::endl;
+
+		rbTree.Insert(557);
+		rbTree.Insert(816);
+		rbTree.Insert(19);
+		rbTree.Insert(210);
+
+		rbTree.PrintTree();
+		std::cout << std::endl;
+
 	}
 
 	system("pause");

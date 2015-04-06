@@ -2,6 +2,11 @@
 #include <iostream>
 #include <cassert>
 
+//--参考：http://www.cnblogs.com/hilow/p/3949188.html
+//--界面化:https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
+//-- 参考：http://saturnman.blog.163.com/
+//-- 参考：http://www.cqyuanye.com/javadevelopment/red-black-tree/
+
 template<typename T>
 class RBTree
 {
@@ -33,10 +38,17 @@ public:
 
 		~Node()
 		{
-			if (left)
+			if (left && left != RBTree::nil)
+			{
 				delete left;
-			if (right)
+				left = NULL;
+			}
+
+			if (right && right != RBTree::nil)
+			{
 				delete right;
+				right = NULL;
+			}
 		}
 
 		Node* left;
@@ -47,9 +59,15 @@ public:
 	};
 
 public:
-	RBTree():root(NULL)
+	RBTree() 
 	{
+		root = nil;
+	}
 
+	~RBTree()
+	{
+		delete root;
+		root = NULL;
 	}
 
 	//--Rotation
@@ -65,7 +83,7 @@ public:
 		Node* q = p->right;
 
 		p->right = q->left;
-		if (q->left != NULL)
+		if (q->left != nil)
 		{
 			q->left->parent = p;
 		}
@@ -75,7 +93,7 @@ public:
 
 
 		q->parent = pf;
-		if (pf == NULL)
+		if (pf == nil)
 		{
 			root = q;
 		}
@@ -100,7 +118,7 @@ public:
 
 		Node* q = p->left;	
 		p->left = q->right; // 
-		if (q->right != NULL)
+		if (q->right != nil)
 		{
 			q->right->parent = p;
 		}
@@ -109,7 +127,7 @@ public:
 		p->parent = q;
 
 
-		if (pf == NULL)
+		if (pf == nil)
 		{
 			root = q;
 		}
@@ -127,11 +145,11 @@ public:
 	//--find grandfather
 	Node* GetGrandFather(Node* p)
 	{
-		if (NULL == p)
-			return NULL;
+		if (nil == p)
+			return nil;
 
-		if (p->parent == NULL)
-			return NULL;
+		if (p->parent == nil)
+			return nil;
 
 		return p->parent->parent;
 	}
@@ -140,13 +158,13 @@ public:
 	Node* GetUncle(Node* p)
 	{
 		Node* grandFather = GetGrandFather(p);
-		if (grandFather)
+		if (grandFather != nil)
 		{
 			assert(p->parent);
 			return p->parent == grandFather->left ? grandFather->right : grandFather->left;
 		}
 
-		return NULL;
+		return nil;
 	}
 
 	Node* GetBrother(Node* p)
@@ -154,18 +172,17 @@ public:
 		assert(p);
 		assert(p->parent);
 
-		if (p == p->left)
-			return p->right;
+		if (p == p->parent->left)
+			return p->parent->right;
 		else
-			return p->left;
+			return p->parent->left;
 	}
-
 	//
 	void Insert(const T& key)
 	{
 		//new node default is red 
-		Node* p = new Node(NULL, NULL, NULL, key, eRed);
-		if (root == NULL)
+		Node* p = new Node(nil, nil, nil, key, eRed);
+		if (root == nil)
 		{
 			InsertNode(p);
 		}
@@ -176,7 +193,7 @@ public:
 			{
 				if (pt->value > key)
 				{
-					if (pt->left == NULL)
+					if (pt->left == nil)
 					{
 						pt->left = p;
 						p->parent = pt;
@@ -190,7 +207,7 @@ public:
 				}
 				else
 				{
-					if (pt->right == NULL)
+					if (pt->right == nil)
 					{
 						pt->right = p;
 						p->parent = pt;
@@ -208,10 +225,9 @@ public:
 		
 	}
 
-
 	void InsertNode(Node* p)
 	{
-		if (p->parent == NULL) //case 1 root 
+		if (p->parent == nil) //case 1 root 
 		{
 			p->colorType = eBlack;
 			root = p;
@@ -221,7 +237,7 @@ public:
 			Node* pu = GetUncle(p);
 			Node* pf = p->parent;
 			Node* pg = GetGrandFather(p);//sure exist
-			if (pu != NULL && pu->colorType == eRed)
+			if (pu != nil && pu->colorType == eRed)
 			{
 				pg->colorType = eRed;
 				p->parent->colorType = eBlack;
@@ -269,63 +285,211 @@ public:
 
 	}
 
-
-	void Delete(const T& key)
-	{
-        
-	}
-
 	Node* GetSubTreeMini(Node* p)//--p
 	{
 		assert(p);
-		if (p->right == NULL)
-			return p;//--return itself
-		else
+		assert(p != nil);
+
+		Node* pc = p->right;
+		while (pc != nil && pc->left != nil)
 		{
-			Node* pc = p->right;
-			while (pc->left)
+			pc = pc->left;
+		}
+		return pc;
+	}
+
+	void Delete(const T& key) //--先按照 二叉查找树方式 删除 再进行修复操作
+	{
+		assert(root);
+		if (nil == root)
+			return;
+		
+		Node* pc = root;
+		while (pc != nil)
+		{
+			if (pc->value == key)
+			{
+				break;
+			}
+			else if (pc->value > key)
 			{
 				pc = pc->left;
 			}
-			return pc;
-		}
-	}
-
-	void DeleteNode(Node* p) //--左子树一定是没有的
-	{
-		if (p == NULL)
-			return;
-
-		if (p->parent == NULL)
-		{
-			root = NULL;
-			delete p;   
-		}
-		else if (p->colorType == eRed || (p->colorType == eBlack && p->right && p->right->colorType == eRed)) //-- direct delete  --
-		{
-			if (p->colorType == eBlack)
+			else
 			{
-				p->right->colorType = eBlack;
+				pc = pc->right;
 			}
+		}
+		if (pc == nil)
+			return; //no result
 
-			Node* pf = p->parent;
-			if (pf->left == p)
+		Node* pf = pc->parent;
+
+		Node* pmin = GetSubTreeMini(pc);
+
+		if (pmin == nil) //--没有右子树 --左子树不一定有
+		{
+			if (pf->left == pc)
 			{
-				pf->left == p->right;
-				if (p->right)
-					p->right->parent = pf;
+				pf->left = pc->left;
 			}
 			else
 			{
-				pf->right = p->right;
-				if (p->right)
-					p->right->parent = pf;
+				pf->right = pc->left;
 			}
+
+			pc->left->parent = pc->parent; //--nil->parent = pc->parent
+			//--进入删除修复操作
+			if (pc->colorType == eBlack)
+			{
+			   ReBalanceNode(pc->left); // 黑 + 黑 pc->left 有可能为 nil 
+			}
+
+			delete pc;
+			//删除的是红色节点 不需要修复
+		}
+		else
+		{
+			pc->value = pmin->value; //== 
+			//实际删除 pmin --pmin 左子树一定是没有 右子树不一定有
+			//删除操作
+			if (pmin == pmin->parent->left)
+			{
+				pmin->parent->left = pmin->right;
+			}
+			else
+			{
+				pmin->parent->right = pmin->right;
+			}
+
+			pmin->right->parent = pmin->parent; //-- pmin->right may be nill
+
+			//-- 开始修复工作
+			if (pmin->colorType == eBlack)
+			{
+				ReBalanceNode(pmin->right); // 额外 + 黑 -- pmin->right may be nill
+			}
+
+			delete pmin;
+		}
+	}
+
+	void ReBalanceNode(Node* p) // 修改--红黑树 修复前  额外 + 黑 p
+	{
+		assert(p);
+		if (p->parent == nil) //修复的是 root
+			return;
+		if (p->colorType == eRed)
+		{
+			p->colorType = eBlack; //直接修复
+			return;
+		}
+
+		//-- pb is sure is not null 
+		//--当前节点是黑色 又不是root 节点
+		//pb 也不会是nil 节点 因为删除前 删除节点是 黑色 所有一定有 兄弟节点（不是根节点）
+		Node* pb = GetBrother(p);
+		assert(pb);
+		assert(pb !=nil );
+
+		if (pb->colorType == eRed)
+		{
+			DeleteNodeCase1(p); // 黑 + 黑 + 叔叔 红色
 		}
 		else 
 		{
-			
+			if ((pb->left == nil || pb->left->colorType == eBlack)
+				&& (pb->right == nil || pb->right->colorType == eBlack))
+			{
+				DeleteNodeCase2(p);
+			}
+			else if ((pb->left && pb->left->colorType == eRed)
+				&& (pb->left == nil || pb->left->colorType == eBlack))
+			{
+				//调整右孩子为红色  然后可以直接转化为 case4
+				DeleteNodeCase3(p);
+			}
+			else
+			{
+				DeleteNodeCase4(p);
+			}
 		}
+
+	}
+
+	void DeleteNodeCase1(Node* p) //修复前 黑 + 黑   叔叔节点为红色  pb == eRed
+	{
+		assert(p);
+		Node* pb = GetBrother(p);
+		assert(pb);
+		assert(pb->colorType == eRed);
+
+		pb->colorType = eBlack;
+		pb->parent->colorType = eRed;
+
+		if (p == p->parent->left)
+		{
+			LeftRotation(p->parent);
+		}
+		else
+		{
+			RightRotation(p->parent);
+		}
+
+		//修复后 黑 + 黑  叔叔为黑  父为红色
+		ReBalanceNode(p);
+
+	}
+
+	void DeleteNodeCase2(Node* p) //修复前 黑 + 黑
+	{
+		assert(p);
+		Node* pb = GetBrother(p);
+		assert(pb);
+		assert(pb->colorType == eBlack);
+		assert(pb->left == NULL || pb->left->colorType == eBlack);
+		assert(pb->right == NULL || pb->right->colorType == eBlack);
+
+		pb->colorType = eRed;
+
+		ReBalanceNode(p->parent);//--递归向上 修复父节点 相当于 父节点 + 黑
+	}
+
+	void DeleteNodeCase3(Node* p) 	//-- 修复前 黑 + 黑 兄弟 左孩子为红色 右孩子为黑 case 3
+	{              
+		assert(p);
+		Node* pb = GetBrother(p);
+		assert(pb);
+		assert(pb->colorType == eBlack);
+		assert(pb->left);
+		assert(pb->left->colorType == eRed);
+		assert(pb->right == NULL || pb->right->colorType == eBlack);
+
+		pb->colorType = eRed;
+		pb->left->colorType = eBlack;
+		RightRotation(pb);
+
+		//turn to case 4
+		DeleteNodeCase4(p);
+	}
+
+	void DeleteNodeCase4(Node* p) //p-- 黑 + 黑  最后一次修复  右孩子为红色
+	{
+		//--if (pb->right != NULL && pb->right->colorType == eRed ) //--case 4
+		assert(p);
+		
+		Node* pb = GetBrother(p);
+		assert(pb);
+		assert(pb->colorType == eBlack);
+		assert(pb->right->colorType == eRed);
+
+			//
+		pb->colorType = p->parent->colorType;
+		pb->right->colorType = eBlack;
+		p->parent->colorType = eBlack;
+
+		LeftRotation(p->parent);
+
 	}
 
 	Node* Search(const T& key)
@@ -336,11 +500,12 @@ public:
 	void PrintTree()
 	{
 		PrintNode(root);
+		Validate();
 	}
 
 	void PrintNode(Node* p)
 	{
-		if (p)
+		if (p != nil)
 		{
 			PrintNode(p->left);
 			std::cout << p->value << " ";
@@ -348,11 +513,10 @@ public:
 		}
 	}
 
-private:
 	Node* SearchNode(Node* p, const T& key)
 	{
-		if (p == NULL)
-			return NULL;
+		if (p == nil)
+			return nil;
 
 		if (p->value == key)
 		{
@@ -368,6 +532,57 @@ private:
 		}
 	}
 
+	bool Validate()
+	{
+		std::cout << std::endl;
+
+		if(root && root->colorType == eRed)
+			return false;
+
+		int count = 0;
+		return Validate(root, &count);
+	}
+
+	bool Validate(Node* p, int* pcount)
+	{
+		assert(p);
+		if (p == nil)
+		{
+			*pcount = 0;
+			return true;
+		}
+
+		if ((p->colorType == eRed)
+			&&((p->left && p->left->colorType == eRed) || (p->right && p->right->colorType == eRed))
+			)
+		{
+			std::cout << "连续2个红色节点:" << p->value << std::endl;
+			return false;
+		}
+
+		int lc, rc;
+		bool lf = Validate(p->left, &lc);
+		bool rf = Validate(p->right, &rc);
+		if (lf && rf && lc == rc)
+		{
+			*pcount = lc;
+			if (p->colorType == eBlack)
+				*pcount = *pcount + 1;
+
+			return true;
+		}
+		else
+		{
+			std::cout << "2个子树黑高不一样:" << p->value << std::endl;
+			return false;
+		}
+	}
+
 private:
+	//static Node*
+	static Node* nil;
 	Node* root;
 };
+
+template<typename T>
+typename RBTree<T>::Node* RBTree<T>::nil = new Node(NULL, NULL, NULL, 0, RBTree<T>::eBlack);

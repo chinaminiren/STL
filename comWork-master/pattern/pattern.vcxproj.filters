@@ -87,9 +87,6 @@
     <ClInclude Include="Item\Single.h">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="Item\Sort.h">
-      <Filter>Item</Filter>
-    </ClInclude>
     <ClInclude Include="Item\State.h">
       <Filter>Item</Filter>
     </ClInclude>
@@ -103,9 +100,6 @@
       <Filter>Item</Filter>
     </ClInclude>
     <ClInclude Include="Item\TemplateMethod.h">
-      <Filter>Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item\Tree.h">
       <Filter>Item</Filter>
     </ClInclude>
     <ClInclude Include="Item\visitor.h">

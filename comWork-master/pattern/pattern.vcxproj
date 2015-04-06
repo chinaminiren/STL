@@ -99,13 +99,11 @@
     <ClInclude Include="Item\Prototype.h" />
     <ClInclude Include="Item\Proxy .h" />
     <ClInclude Include="Item\Single.h" />
-    <ClInclude Include="Item\Sort.h" />
     <ClInclude Include="Item\State.h" />
     <ClInclude Include="Item\stdafx.h" />
     <ClInclude Include="Item\Strategy.h" />
     <ClInclude Include="Item\targetver.h" />
     <ClInclude Include="Item\TemplateMethod.h" />
-    <ClInclude Include="Item\Tree.h" />
     <ClInclude Include="Item\visitor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
