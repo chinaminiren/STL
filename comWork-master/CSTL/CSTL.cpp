@@ -85,7 +85,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//数组 相关
 	int* pArray = new int [10];
-
+	unsigned long a = 10;
+	unsigned long b = 10;
+	std::swap(a, b);
 	//--typedef 相关
 
 	return 0;

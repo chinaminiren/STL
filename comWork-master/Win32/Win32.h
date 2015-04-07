@@ -11,6 +11,6 @@ public:
 public:
 	virtual bool InitInstance();
 	virtual int ExitInstance();
-	virtual bool OnIdle(LONG lCount);
+	virtual bool OnIdle(long lCount);
 
 };

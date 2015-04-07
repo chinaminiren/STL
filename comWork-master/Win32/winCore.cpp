@@ -118,7 +118,7 @@ LRESULT xWindow::DefWindowProc(UINT nMsg, WPARAM wParam, LPARAM lParam)
 BOOL xWindow::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT &lResult)
 {
 	lResult = 0;
-
+	
 	//检查退出系统
 	if (message == WM_NCDESTROY)
 	{
