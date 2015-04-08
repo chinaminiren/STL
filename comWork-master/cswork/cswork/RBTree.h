@@ -577,12 +577,17 @@ public:
 			return false;
 		}
 	}
+private:
+	Node* root;
 
 private:
-	//static Node*
+	static Node node;
 	static Node* nil;
-	Node* root;
 };
 
 template<typename T>
-typename RBTree<T>::Node* RBTree<T>::nil = new Node(NULL, NULL, NULL, 0, RBTree<T>::eBlack);
+typename RBTree<T>::Node RBTree<T>::node(NULL, NULL, NULL, 0,  RBTree<T>::eBlack);
+
+template<typename T>
+typename RBTree<T>::Node* RBTree<T>::nil = &RBTree<T>::node;
+

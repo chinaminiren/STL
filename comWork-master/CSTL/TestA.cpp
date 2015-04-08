@@ -1,13 +1,14 @@
-// stddll.cpp : Defines the exported functions for the DLL application.
-//
-
 #include "stdafx.h"
 #include "DayTest.h"
 #include <iostream>
 
-__declspec(dllexport) void DllTest()
+void ChangeA()
 {
+	CDayTest < int>::a = 100;
 	std::cout << CDayTest<int>::a << std::endl;
 }
 
-
+void TestA()
+{
+	std::cout << CDayTest<int>::a << std::endl;
+}

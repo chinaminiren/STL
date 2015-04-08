@@ -81,6 +81,20 @@ BOOL xWindow::CreateWnd(DWORD dwExStyle, LPCTSTR lpszClassName, LPCTSTR lpszWind
 	return TRUE;
 }
 
+INT_PTR xWindow::DoModal(HWND hParent)
+{
+	assert(m_hWnd == NULL);//已存在的窗口不能使用模态
+
+	::EnableWindow(hParent, FALSE);
+	//RHookWindowCreate(this);
+
+
+
+	::EnableWindow(hParent, TRUE);
+
+	return 0;
+}
+
 BOOL xWindow::Attach(HWND hWndNew) // handle--obj map
 {
 	if (NULL == hWndNew)

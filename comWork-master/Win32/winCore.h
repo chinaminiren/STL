@@ -44,6 +44,9 @@ public:
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	BOOL CreateWnd(DWORD dwExStyle, LPCTSTR lpszClassName, LPCTSTR lpszWindowName,
 		DWORD dwStyle,int x,int y,int nWith,int nHeigh,HWND hWndParent,HMENU nIDorHMenu,LPVOID lpParam);
+
+	INT_PTR DoModal(HWND hParent);
+
 	BOOL Attach(HWND hWndNew); //窗体销毁需要自动 销毁 map中的数据 以及
 
 	WNDPROC GetSurperWndProcAddr();

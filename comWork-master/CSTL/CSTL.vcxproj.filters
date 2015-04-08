@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{d1de1151-328c-4e9d-a2c5-a54decb0e65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TemplateStaticMember">
+      <UniqueIdentifier>{d2614c63-bcf3-4ad7-955d-d1add5b23d79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,8 +30,8 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DayTest.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="STLMemory.h">
+      <Filter>Memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -36,7 +42,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DayTest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>TemplateStaticMember</Filter>
+    </ClCompile>
+    <ClCompile Include="TestA.cpp">
+      <Filter>TemplateStaticMember</Filter>
+    </ClCompile>
+    <ClCompile Include="TestB.cpp">
+      <Filter>TemplateStaticMember</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
