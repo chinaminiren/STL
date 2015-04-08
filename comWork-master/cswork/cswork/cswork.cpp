@@ -140,7 +140,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		osTree.PrintTree();
 		std::cout << std::endl;
 
-		OSTree<int>::Node* p = osTree.OS_Select(1);
+		OSTree<int>::Node* p = osTree.OS_Select(11);
 		std::cout << p->size << " " << p->value << std::endl;
 
 	}

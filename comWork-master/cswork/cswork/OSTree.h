@@ -186,11 +186,10 @@ public:
 	void Insert(const T& key)
 	{
 		//new node default is red 
-		Node* p = new Node(nil, nil, nil, key, eRed,0);
+		Node* p = new Node(nil, nil, nil, key, eRed,1);
 		if (root == nil)
 		{
 			InsertNode(p);
-			p->size = p->size + 1;
 		}
 		else
 		{
