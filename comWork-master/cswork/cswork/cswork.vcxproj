@@ -80,6 +80,7 @@
     <ClInclude Include="..\..\pattern\Item\BSTree.h" />
     <ClInclude Include="..\..\pattern\Item\Sort.h" />
     <ClInclude Include="AVLTree.h" />
+    <ClInclude Include="OSTree.h" />
     <ClInclude Include="RBTree.h" />
     <ClInclude Include="RHash.h" />
     <ClInclude Include="SomeHeader.h" />

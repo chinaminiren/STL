@@ -9,6 +9,7 @@
 #include "RHash.h"
 #include "AVLTree.h"
 #include "RBTree.h"
+#include "OSTree.h"
 
 using namespace std;
 
@@ -19,12 +20,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	//--Hash
 	{
 
-		HashMap<std::string, std::string> map;
+	/*	HashMap<std::string, std::string> map;
 		bool bFlag = map.HashInsert("123", "CBC");
 		bFlag = map.HashInsert("234", "CBC");
 		bFlag = map.HashInsert("456", "CBC");
 		map.HashDelete("234");
-		std::string* ptrStr = map.HashSearch("234");
+		std::string* ptrStr = map.HashSearch("234");*/
 
 	}
 
@@ -63,7 +64,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//--RBTree
 	{
-		RBTree<int> rbTree;
+		/*RBTree<int> rbTree;
 		rbTree.Insert(1);
 		rbTree.Insert(232);
 		rbTree.Insert(53);
@@ -104,7 +105,43 @@ int _tmain(int argc, _TCHAR* argv[])
 		rbTree.Insert(210);
 
 		rbTree.PrintTree();
+		std::cout << std::endl;*/
+
+	}
+
+	//-- OSTree
+	{
+		OSTree<int> osTree;
+		osTree.Insert(1);
+		osTree.Insert(232);
+		osTree.Insert(53);
+		osTree.Insert(54);
+		osTree.Insert(55);
+		osTree.Insert(6);
+		osTree.Insert(7);
+		osTree.Insert(6);
+		osTree.Insert(9);
+		osTree.Insert(0);
+		osTree.Insert(5);
+		osTree.Insert(62);
+		osTree.Insert(4);
+		osTree.Insert(53);
+		osTree.Insert(91);
+		osTree.Insert(10);
+		osTree.Insert(25);
+		osTree.Insert(612);
+		osTree.Insert(-317);
+		osTree.Insert(38);
+		osTree.Insert(557);
+		osTree.Insert(816);
+		osTree.Insert(19);
+		osTree.Insert(210);
+
+		osTree.PrintTree();
 		std::cout << std::endl;
+
+		OSTree<int>::Node* p = osTree.OS_Select(1);
+		std::cout << p->size << " " << p->value << std::endl;
 
 	}
 

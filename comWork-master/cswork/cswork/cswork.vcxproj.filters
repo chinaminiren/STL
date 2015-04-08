@@ -13,11 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\RBTree">
-      <UniqueIdentifier>{bddb82d5-0414-4c37-8bfe-fca9feff1786}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\AVL">
+    <Filter Include="AVL">
       <UniqueIdentifier>{652dbacf-4672-4c86-a3ef-b6cae16d74aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BST">
+      <UniqueIdentifier>{04f20a3c-ac36-427b-b442-31a1bafd0dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hash">
+      <UniqueIdentifier>{d5775972-76d9-4b01-8e72-87c8d61de52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="O-STree">
+      <UniqueIdentifier>{f7dfa33a-b2a9-4f0b-b6a0-f8c3177ada81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sort">
+      <UniqueIdentifier>{ca4c956c-66bd-4c6c-89b5-9e8df24957b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RBTree">
+      <UniqueIdentifier>{bddb82d5-0414-4c37-8bfe-fca9feff1786}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,23 +39,26 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="RHash.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SomeHeader.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RBTree.h">
-      <Filter>头文件\RBTree</Filter>
+      <Filter>RBTree</Filter>
     </ClInclude>
     <ClInclude Include="AVLTree.h">
-      <Filter>头文件\AVL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pattern\Item\Sort.h">
-      <Filter>头文件</Filter>
+      <Filter>AVL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pattern\Item\BSTree.h">
-      <Filter>头文件</Filter>
+      <Filter>BST</Filter>
+    </ClInclude>
+    <ClInclude Include="RHash.h">
+      <Filter>Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pattern\Item\Sort.h">
+      <Filter>Sort</Filter>
+    </ClInclude>
+    <ClInclude Include="OSTree.h">
+      <Filter>O-STree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +69,7 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RBTree.cpp">
-      <Filter>头文件\RBTree</Filter>
+      <Filter>RBTree</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
