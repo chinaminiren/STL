@@ -19,19 +19,25 @@ namespace WebChart
 
             StringBuilder sb = new StringBuilder();
             sb.Append("[");
-            for (int i = 20; i < 30; ++i)
-            {
-                sb.Append("[");
 
-                DateTime utcNow = DateTime.Now.ToUniversalTime();
-                double utc = ConvertDateTimeInt(utcNow) + i * 1000;
-                sb.Append(utc.ToString());
-                sb.Append(",");
-                sb.Append((i * 10).ToString());
-                sb.Append("]");
-                if(i<99)
-                  sb.Append(",");
-            }
+            sb.Append("[");
+            long dt = DateTime.Now.Ticks;
+            //double utc = ConvertDateTimeInt(utcNow);
+            sb.Append(dt.ToString());
+            sb.Append(",");
+            sb.Append((10).ToString());
+            sb.Append("]");
+
+            sb.Append(",");
+
+            sb.Append("[");
+            dt = DateTime.Now.AddSeconds(1).Ticks;
+            //double utc = ConvertDateTimeInt(utcNow);
+            sb.Append(dt.ToString());
+            sb.Append(",");
+            sb.Append((20).ToString());
+            sb.Append("]");
+
             sb.Append("]");
 
             string json = sb.ToString();

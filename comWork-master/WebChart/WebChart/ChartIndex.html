@@ -5,14 +5,41 @@
     <script type="text/javascript" src="../js/highcharts.js"></script>
     <script>
         $(document).ready(function () {
-            var chart = new Highcharts.Chart({
+            var chart;
+
+            createChart();
+        });
+
+        function createChart() {
+            chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'container', //图表放置的容器，DIV 
                     type: 'spline',
+                    marginRight: 10,
                     global: {
-                        useUTC: true  //开启UTC
+                        useUTC: false  //开启UTC
+                    },
+                    events: {
+                        load: function () {
+                            var series = this.series[0];
+                            setInterval(function () {                           
+                                $.ajax({
+                                    url: "../DataHandler.ashx",
+                                    type: "get",
+                                    dataType: "text",
+                                    success: function (data) {
+                                        var json = eval('(' + data + ')');
+                                        var x = (new Date()).getTime();
+
+                                        var y = json[0][1];
+                                        series.addPoint([x, y], true, true);
+                                    }
+                                });
+
+                            }, 1000);
+                        }
                     }
-                },
+                },              
                 title: {
                     text: '在线人数统计'
                 },
@@ -21,6 +48,7 @@
                 },
                 xAxis: {
                     type: 'datetime',
+                    tickPixelInterval: 150
                    
                 },
                 yAxis: {
@@ -32,12 +60,21 @@
                             return this.value
                         }
                     },
-                    min: 0
+                    min: 0,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
 
                 },
                 tooltip: {
-                    crosshairs: true,
-                    shared: true
+                    formatter: function () {
+                        return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                legend: {
+                    enabled: false
                 },
                 plotOptions: {
                     spline: {
@@ -50,37 +87,19 @@
                 },
                 series: [{
                     name: '在线人数',
-                    data: [                       
-                        [Date.UTC(1971, 3, 13), 2.8],
-                        [Date.UTC(1971, 4, 3), 2.1],
-                        [Date.UTC(1971, 4, 26), 1.1],
-                        [Date.UTC(1971, 5, 9), 0.25],
-                        [Date.UTC(1971, 5, 12), 0]
-                    ]
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                            time = (new Date()).getTime(),
+                            i;
+                        for (i = -30; i <= 0; i += 1) {
+                            data.push({ x: time + i * 1000, y: 0 });
+                        }
+                        return data;
+                    }())
                 }]
             });
-
-            $.ajax({
-                type: "get",
-                url: "../DataHandler.ashx",
-                data: { "id": "2" },
-                dataType: "text",
-                success: function (data) {
-                    var json = eval('(' + data + ')');
-                    //alert(json);
-                  
-                    chart.series[0].remove(false);
-
-                    chart.addSeries({
-                        name:'时间-人数',
-                        data: json
-                    }, false);
-
-                    chart.redraw();
-                }
-            });
-
-        });
+        }
 
     </script>
 
@@ -89,7 +108,9 @@
     </title>
 </head>
 <body>
-    <div></div>
+    <div>
+        <label id="lba"></label>
+    </div>
     <div id="container" style="min-width:700px;height:400px"></div>
 </body>
 </html>
