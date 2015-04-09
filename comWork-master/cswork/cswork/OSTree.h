@@ -303,6 +303,7 @@ public:
 		Node* pc = p->right;
 		while (pc != nil && pc->left != nil)
 		{
+			pc->size = pc->size - 1;
 			pc = pc->left;
 		}
 		return pc;
@@ -317,6 +318,8 @@ public:
 		Node* pc = root;
 		while (pc != nil)
 		{
+			pc->size = pc->size - 1;
+
 			if (pc->value == key)
 			{
 				break;
@@ -414,7 +417,7 @@ public:
 				DeleteNodeCase2(p);
 			}
 			else if ((pb->left && pb->left->colorType == eRed)
-				&& (pb->left == nil || pb->left->colorType == eBlack))
+				&& (pb->right == nil || pb->right->colorType == eBlack))
 			{
 				//调整右孩子为红色  然后可以直接转化为 case4
 				DeleteNodeCase3(p);
@@ -477,6 +480,8 @@ public:
 
 		pb->colorType = eRed;
 		pb->left->colorType = eBlack;
+
+
 		RightRotation(pb);
 
 		//turn to case 4
@@ -497,9 +502,10 @@ public:
 		pb->colorType = p->parent->colorType;
 		pb->right->colorType = eBlack;
 		p->parent->colorType = eBlack;
-
-		LeftRotation(p->parent);
-
+		if (p == p->parent->left)
+			LeftRotation(p->parent);
+		else
+			RightRotation(p->parent);
 	}
 
 	Node* Search(const T& key)

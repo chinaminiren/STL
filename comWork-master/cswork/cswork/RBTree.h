@@ -404,7 +404,7 @@ public:
 				DeleteNodeCase2(p);
 			}
 			else if ((pb->left && pb->left->colorType == eRed)
-				&& (pb->left == nil || pb->left->colorType == eBlack))
+				&& (pb->right == nil || pb->right->colorType == eBlack))
 			{
 				//调整右孩子为红色  然后可以直接转化为 case4
 				DeleteNodeCase3(p);
@@ -488,7 +488,10 @@ public:
 		pb->right->colorType = eBlack;
 		p->parent->colorType = eBlack;
 
-		LeftRotation(p->parent);
+		if (p == p->parent->left)
+			LeftRotation(p->parent);
+		else
+			RightRotation(p->parent);
 
 	}
 

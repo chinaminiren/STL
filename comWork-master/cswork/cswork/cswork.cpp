@@ -143,6 +143,19 @@ int _tmain(int argc, _TCHAR* argv[])
 		OSTree<int>::Node* p = osTree.OS_Select(11);
 		std::cout << p->size << " " << p->value << std::endl;
 
+		//osTree.Delete(19);
+	    //osTree.Delete(210);
+		osTree.Delete(62);
+		//osTree.Delete(54);
+		//osTree.Delete(4);
+		//osTree.Delete(1);
+
+		osTree.PrintTree();
+		std::cout << std::endl;
+
+		OSTree<int>::Node* ph = osTree.OS_Select(11);
+		std::cout << ph->size << " " << ph->value << std::endl;
+
 	}
 
 	system("pause");

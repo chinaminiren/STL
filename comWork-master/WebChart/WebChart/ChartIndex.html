@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../js/highcharts.js"></script>
+    <script>
+        $(document).ready(function () {
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container', //图表放置的容器，DIV 
+                    type: 'spline',
+                    global: {
+                        useUTC: true  //开启UTC
+                    }
+                },
+                title: {
+                    text: '在线人数统计'
+                },
+                subtitle: {
+                    text: '网络'
+                },
+                xAxis: {
+                    type: 'datetime',
+                   
+                },
+                yAxis: {
+                    title: {
+                        text: '人数'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value
+                        }
+                    },
+                    min: 0
+
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+                series: [{
+                    name: '在线人数',
+                    data: [                       
+                        [Date.UTC(1971, 3, 13), 2.8],
+                        [Date.UTC(1971, 4, 3), 2.1],
+                        [Date.UTC(1971, 4, 26), 1.1],
+                        [Date.UTC(1971, 5, 9), 0.25],
+                        [Date.UTC(1971, 5, 12), 0]
+                    ]
+                }]
+            });
+
+            $.ajax({
+                type: "get",
+                url: "../DataHandler.ashx",
+                data: { "id": "2" },
+                dataType: "text",
+                success: function (data) {
+                    var json = eval('(' + data + ')');
+                    //alert(json);
+                  
+                    chart.series[0].remove(false);
+
+                    chart.addSeries({
+                        name:'时间-人数',
+                        data: json
+                    }, false);
+
+                    chart.redraw();
+                }
+            });
+
+        });
+
+    </script>
+
+    <title>
+        网络
+    </title>
+</head>
+<body>
+    <div></div>
+    <div id="container" style="min-width:700px;height:400px"></div>
+</body>
+</html>
+<!--http://www.highcharts.com/demo/dynamic-update-->
