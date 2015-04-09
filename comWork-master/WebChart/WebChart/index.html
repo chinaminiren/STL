@@ -53,9 +53,105 @@
             //createChart();
         });
 
+        function ShowSearchChart()
+        {
+            clearInterval();
+            $("#tip").hide();
+            $("#container").hide();
+            $("#container2").show();
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container2', //图表放置的容器，DIV
+                    type: 'spline',
+                    marginRight: 10,
+                    global: {
+                        useUTC: false  //开启UTC
+                    },
+                    events: {
+                        load: function () {
+                            var series = this.series[0];
+                            setInterval(function () {
+                                $.ajax({
+                                    url: "../DataHandler.ashx",
+                                    type: "get",
+                                    dataType: "text",
+                                    success: function (data) {
+                                        var json = eval('(' + data + ')');
+                                        var x = (new Date()).getTime();
+
+                                        var y = json[0][1];
+                                        series.addPoint([x, y], true, true);
+                                    }
+                                });
+
+                            }, 1000);
+                        }
+                    }
+                },
+                title: {
+                    text: '历史在线人数统计'
+                },
+                subtitle: {
+                    text: '网络'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    //tickPixelInterval: 150
+                },
+                yAxis: {
+                    title: {
+                        text: '人数'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value
+                        }
+                    },
+                    min: 0,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+
+                },
+                tooltip: {
+                    formatter: function () {
+                        return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+                series: [{
+                    name: '历史人数',
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                            time = (new Date()).getTime(),
+                            i;
+                        for (i = -30; i <= 0; i += 1) {
+                            data.push({ x: time + i * 1000, y: 0 });
+                        }
+                        return data;
+                    }())
+                }]
+            });
+        }
 
         function createChart() {
             $("#tip").hide();
+            $("#container2").hide();
+            $("#container").show();
             var chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'container', //图表放置的容器，DIV
@@ -216,7 +312,7 @@
                                 <a href="#"><i class="glyphicon glyphicon-list-alt"></i><span> 图表曲线</span></a>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a href="#" onclick="createChart()">实时在线统计</a></li>
-                                    <li><a href="#">历史在线查询</a></li>
+                                    <li><a href="#" onclick="ShowSearchChart()">历史在线查询</a></li>
                                 </ul>
                             </li>
 
@@ -267,6 +363,7 @@
                             </div>
                             <div class="box-content row">
                                 <div id="container" class="col-lg-11 col-md-12"></div>
+                                <div id="container2" class="col-lg-11 col-md-12"></div>
                                 <div id="tip" class="col-lg-11 col-md-12">
                                     <h1>
                                         Charisma <br>
