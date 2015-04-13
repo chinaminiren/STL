@@ -1,0 +1,102 @@
+extends layout
+
+block content
+ div 
+     div#container(style="min-width: 500px; height: 500px; margin: 0 auto")
+        
+ script.
+      $(document).ready(function () {
+            var chart;
+            createChart();
+        });
+       
+
+        function createChart() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container', 
+                    type: 'spline',
+                    marginRight: 10,
+                    global: {
+                        useUTC: true   
+                    },
+                    events: {
+                        load: function () {
+                            var series = this.series[0];
+                            setInterval(function () {                           
+                                $.ajax({
+                                    url: "/RealTimeData",
+                                    type: "get",
+                                    data:{id:123},
+                                    dataType: "json",
+                                    cache: false,
+                                    success: function (data) {                                                                   
+                                          var x = data.dt;
+                                          var y = data.num;
+                                          if(series.data.length >= 20)
+                                            series.addPoint([x, y], true, true); 
+                                          else
+                                           series.addPoint([x, y], true, false); 
+                                    }
+                                });
+
+                            }, 1000);
+                        }
+                    }
+                },              
+                title: {
+                    text: '!{chartTile}'
+                },
+                subtitle: {
+                    text: '!{chartSubTile}'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    //tickPixelInterval: 150        
+                },
+                yAxis: {
+                    title: {
+                        text: '!{yText}'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value
+                        }
+                    },
+                    min: 0,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+
+                },
+                tooltip: {
+                    formatter: function () {
+                        return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + this.y;
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+                series: [{
+                    name: '!{seriesName}',
+                    data: (function () {
+                        var data = [];                          
+                        return data;
+                    }())
+                }]
+            });
+        }
+
+
+  

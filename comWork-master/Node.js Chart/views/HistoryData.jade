@@ -1,0 +1,109 @@
+﻿extends layout
+
+
+block content
+ div.row-fluid
+   div.box-content#tbContent
+     h2
+     - var ar = array;
+     - for (var i in ar) {
+       button.btn.btn-link(type="button",onclick="showChart(#{ar[i].GameID},'#{ar[i].GameName}')") #{ar[i].GameName} 
+     -}
+     
+   div#container(style="min-width: 500px; height: 500px; margin: 0 auto")
+        
+  script.
+      $(document).ready(function () {
+            var chart;
+            createChart();
+        });
+         function showChart(gameID,gameName) {
+                            var series = chart.series[0];         
+                                $.ajax({
+                                    url: "/GetHistoryData",
+                                    data:{ id: gameID},
+                                    type: "get",
+                                    dataType: "text",
+                                    success: function (data) {
+                                        var json = eval('(' + data + ')');                                        
+                                        series.setData(json);
+                                      chart.setTitle({text: gameName + ' 历史在线人数'});
+                                    }
+                                });
+                        }
+
+        function createChart() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container', 
+                    type: 'spline',
+                    marginRight: 10,
+                    global: {
+                        useUTC: false  
+                    },
+                    events: {
+                        load: function () {
+                            var series = this.series[0];                     
+                                $.ajax({
+                                    url: "/GetHistoryData",
+                                    type: "get",
+                                    dataType: "text",
+                                    success: function (data) {                                       
+                                    }
+                                });
+                        }
+                    }
+                },              
+                title: {
+                    text: '!{chartTile}'
+                },
+                subtitle: {
+                    text: '!{chartSubTile}'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    //tickPixelInterval: 150        
+                },
+                yAxis: {
+                    title: {
+                        text: '!{yText}'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value
+                        }
+                    },
+                    min: 0,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+
+                },
+                tooltip: {
+                    formatter: function () {
+                        return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + this.y;
+                    }
+                },
+                legend: {
+                    enabled: true
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+                series: [{
+                    name: '!{seriesName}',
+                    data: (function () {
+                        var data = [];                           
+                        return data;
+                    }())
+                }]
+            });
+        }

@@ -1,0 +1,31 @@
+﻿{
+    "secret": "b76dc8f65af949308d5b9758c7fc68a7417d1add9df54991b92bfa130ba3de2d6e7f34fa19604ac1bfeed2c3b824cd7b",
+    "port": "3000", 
+    "ip": "192.168.3.12",
+    "LoginUrlApi": "http://localhost:51041/Login.ashx",
+    "connection": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "password": "root",
+        "database": "test"
+    },
+    "GameZone": 
+    [
+        {
+            "GameID": 123,
+            "GameName": "TT区域"
+        },
+        {
+            "GameID": 124,
+            "GameName": "TS区域"
+        },
+        {
+            "GameID": 125,
+            "GameName": "TE区域"
+        },
+        {
+            "GameID": 126,
+            "GameName": "TY区域"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ChartNodeJs",
+  "version": "0.0.0",
+  "description": "ChartNodeJs",
+  "main": "app.js",
+  "author": {
+    "name": "tt",
+    "email": ""
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "cookie-session": "^1.1.0",
+    "errorhandler": "*",
+    "express": "^4.*",
+    "express-session": "*",
+    "jade": "*",
+    "morgan": "*",
+    "mysql": "*",
+    "node-mysql": "^0.4.2",
+    "serve-favicon": "*",
+    "stylus": "*",
+    "superagent": "*",
+    "moment": "*"
+  }
+}

@@ -1,0 +1,38 @@
+﻿doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title #{title} - 监控系统
+    link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
+    script(src='/javascripts/modernizr-2.6.2.js')
+    script(src='/javascripts/jquery-1.10.2.js')
+    script(src='/javascripts/highcharts.js')
+  body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') 网络科技
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/IndexPage') 主页
+            li
+              a(href='/OnlineDataPage') 实时在线人数
+            li
+              a(href='/HistoryDataPage') 历史在线人数
+    .container.body-content
+      block content
+      hr
+      footer
+        p &copy; #{year} - 监控系统
+
+    script(src='/javascripts/bootstrap.js')
+    script(src='/javascripts/respond.js')
+     script(src='/javascripts/jquery-1.10.2.min.js')
+    block scripts
