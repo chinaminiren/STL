@@ -64,32 +64,29 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//--RBTree
 	{
-		/*RBTree<int> rbTree;
-		rbTree.Insert(1);
-		rbTree.Insert(232);
-		rbTree.Insert(53);
-		rbTree.Insert(54);
-		rbTree.Insert(55);
-		rbTree.Insert(6);
-		rbTree.Insert(7);
-		rbTree.Insert(6);
+		/*
+		RBTree<int> rbTree;
 		rbTree.Insert(9);
 		rbTree.Insert(0);
 		rbTree.Insert(5);
-	    rbTree.Insert(62);
-	    rbTree.Insert(4);
-		rbTree.Insert(53); 
+		rbTree.Insert(62);
+		rbTree.Insert(4);
+		rbTree.Insert(53);
 		rbTree.Insert(91);
 		rbTree.Insert(10);
 		rbTree.Insert(25);
 		rbTree.Insert(612);
 		rbTree.Insert(-317);
 		rbTree.Insert(38);
+		rbTree.Insert(557);
+		rbTree.Insert(816);
+		rbTree.Insert(19);
+		rbTree.Insert(210);
 
 		rbTree.PrintTree();
 		std::cout << std::endl;
 
-		rbTree.Delete(53);
+		rbTree.Delete(816);
 		rbTree.Delete(232);
 		rbTree.Delete(55);
 		rbTree.Insert(170);
@@ -105,8 +102,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		rbTree.Insert(210);
 
 		rbTree.PrintTree();
-		std::cout << std::endl;*/
-
+		std::cout << std::endl;
+		*/
 	}
 
 	//-- OSTree
@@ -143,19 +140,19 @@ int _tmain(int argc, _TCHAR* argv[])
 		OSTree<int>::Node* p = osTree.OS_Select(11);
 		std::cout << p->size << " " << p->value << std::endl;
 
-		//osTree.Delete(19);
-	    //osTree.Delete(210);
+		osTree.Delete(19);
+	    osTree.Delete(210);
 		osTree.Delete(62);
-		//osTree.Delete(54);
-		//osTree.Delete(4);
-		//osTree.Delete(1);
+		osTree.Delete(54);
+		osTree.Delete(4);
+		osTree.Delete(1);
 
 		osTree.PrintTree();
 		std::cout << std::endl;
 
 		OSTree<int>::Node* ph = osTree.OS_Select(11);
 		std::cout << ph->size << " " << ph->value << std::endl;
-
+	
 	}
 
 	system("pause");

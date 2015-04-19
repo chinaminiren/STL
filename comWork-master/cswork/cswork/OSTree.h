@@ -405,107 +405,91 @@ public:
 		assert(pb);
 		assert(pb != nil);
 
-		if (pb->colorType == eRed)
+		if (p == p->parent->left)
 		{
-			DeleteNodeCase1(p); // 黑 + 黑 + 叔叔 红色
-		}
-		else
-		{
-			if ((pb->left == nil || pb->left->colorType == eBlack)
-				&& (pb->right == nil || pb->right->colorType == eBlack))
+			//左节点
+			if (pb->colorType == eRed)
 			{
-				DeleteNodeCase2(p);
-			}
-			else if ((pb->left && pb->left->colorType == eRed)
-				&& (pb->right == nil || pb->right->colorType == eBlack))
-			{
-				//调整右孩子为红色  然后可以直接转化为 case4
-				DeleteNodeCase3(p);
+				pb->colorType = eBlack;
+				pb->parent->colorType = eRed;
+
+				LeftRotation(p->parent); //旋转为了 兄弟节点为 黑色
+
+				//修复后 黑 + 黑  叔叔为黑  父为红色
+				ReBalanceNode(p);
 			}
 			else
 			{
-				DeleteNodeCase4(p);
+				if ((pb->left == nil || pb->left->colorType == eBlack)
+					&& (pb->right == nil || pb->right->colorType == eBlack))
+				{
+					pb->colorType = eRed;
+
+					ReBalanceNode(p->parent);//--递归向上 修复父节点 相当于 父节点 + 黑 // 父节点有可能为 红色
+				}
+				else if ((pb->left && pb->left->colorType == eRed)
+					&& (pb->right == nil || pb->right->colorType == eBlack))
+				{
+					pb->colorType = eRed;
+					pb->left->colorType = eBlack;
+					RightRotation(pb);
+
+					ReBalanceNode(p);
+				}
+				else
+				{
+					pb->colorType = p->parent->colorType;
+					pb->right->colorType = eBlack;
+					p->parent->colorType = eBlack;
+
+					LeftRotation(p->parent);
+				}
+
 			}
-		}
 
-	}
-
-	void DeleteNodeCase1(Node* p) //修复前 黑 + 黑   叔叔节点为红色  pb == eRed
-	{
-		assert(p);
-		Node* pb = GetBrother(p);
-		assert(pb);
-		assert(pb->colorType == eRed);
-
-		pb->colorType = eBlack;
-		pb->parent->colorType = eRed;
-
-		if (p == p->parent->left)
+		} //end p-->end
+		else  //右节点
 		{
-			LeftRotation(p->parent);
-		}
-		else
-		{
-			RightRotation(p->parent);
-		}
 
-		//修复后 黑 + 黑  叔叔为黑  父为红色
-		ReBalanceNode(p);
+			if (pb->colorType == eRed)
+			{
+				pb->colorType = eBlack;
+				pb->parent->colorType = eRed;
 
-	}
+				RightRotation(p->parent); //旋转为了 兄弟节点为 黑色
 
-	void DeleteNodeCase2(Node* p) //修复前 黑 + 黑
-	{
-		assert(p);
-		Node* pb = GetBrother(p);
-		assert(pb);
-		assert(pb->colorType == eBlack);
-		assert(pb->left == NULL || pb->left->colorType == eBlack);
-		assert(pb->right == NULL || pb->right->colorType == eBlack);
+				//修复后 黑 + 黑  叔叔为黑  父为红色
+				ReBalanceNode(p);
+			}
+			else
+			{
+				if ((pb->left == nil || pb->left->colorType == eBlack)
+					&& (pb->right == nil || pb->right->colorType == eBlack))
+				{
+					pb->colorType = eRed;
 
-		pb->colorType = eRed;
+					ReBalanceNode(p->parent);//--递归向上 修复父节点 相当于 父节点 + 黑 // 父节点有可能为 红色
+				}
+				else if ((pb->right && pb->right->colorType == eRed)
+					&& (pb->left == nil || pb->left->colorType == eBlack))
+				{
+					pb->colorType = eRed;
+					pb->right->colorType = eBlack;
+					LeftRotation(pb);
 
-		ReBalanceNode(p->parent);//--递归向上 修复父节点 相当于 父节点 + 黑
-	}
+					ReBalanceNode(p);
+				}
+				else
+				{
+					pb->colorType = p->parent->colorType;
+					pb->left->colorType = eBlack;
+					p->parent->colorType = eBlack;
 
-	void DeleteNodeCase3(Node* p) 	//-- 修复前 黑 + 黑 兄弟 左孩子为红色 右孩子为黑 case 3
-	{
-		assert(p);
-		Node* pb = GetBrother(p);
-		assert(pb);
-		assert(pb->colorType == eBlack);
-		assert(pb->left);
-		assert(pb->left->colorType == eRed);
-		assert(pb->right == NULL || pb->right->colorType == eBlack);
+					RightRotation(p->parent);
+				}
+			}
 
-		pb->colorType = eRed;
-		pb->left->colorType = eBlack;
-
-
-		RightRotation(pb);
-
-		//turn to case 4
-		DeleteNodeCase4(p);
-	}
-
-	void DeleteNodeCase4(Node* p) //p-- 黑 + 黑  最后一次修复  右孩子为红色
-	{
-		//--if (pb->right != NULL && pb->right->colorType == eRed ) //--case 4
-		assert(p);
-
-		Node* pb = GetBrother(p);
-		assert(pb);
-		assert(pb->colorType == eBlack);
-		assert(pb->right->colorType == eRed);
-
-		//
-		pb->colorType = p->parent->colorType;
-		pb->right->colorType = eBlack;
-		p->parent->colorType = eBlack;
-		if (p == p->parent->left)
-			LeftRotation(p->parent);
-		else
-			RightRotation(p->parent);
+		} //end p-->right
 	}
 
 	Node* Search(const T& key)
