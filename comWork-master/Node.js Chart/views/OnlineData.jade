@@ -1,15 +1,57 @@
-extends layout
+﻿extends layout
 
 block content
- div 
-     div#container(style="min-width: 500px; height: 500px; margin: 0 auto")
+ div.row-fluid
+   div.box-content#tbContent
+     h2
+     - var ar = gamearray;
+     - for (var i in ar) {
+       button.btn.btn-primary(type="button",onclick="showChart(#{ar[i].GameID},'#{ar[i].GameName}')") #{ar[i].GameName} 
+       lable &nbsp;
+     -}
+   div#container(style="min-width: 500px; height: 500px; margin: 0 auto")
         
  script.
       $(document).ready(function () {
             var chart;
+            timerID = 0;
             createChart();
         });
        
+        function showChart(gameID,gameName) {    
+            var series = chart.series[0];      
+            chart.setTitle({text: gameName + ' 实时线人数'});   
+            series.setData([]);
+            clearInterval(timerID);        
+            GetData(gameID);
+            timerID = setInterval(function () {                           
+              GetData(gameID);
+            }, 2000);
+        }
+        function GetData(gameID)
+        {
+             var series = chart.series[0];     
+                                
+                $.ajax({
+                    url: "/RealTimeData",
+                    data:{ id: gameID},
+                    type: "get",
+                    cache: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.result == 0)
+                        {
+                            var x = data.dt;
+                            var y = data.num;
+                            if(series.data.length >= 20)
+                            series.addPoint([x, y], true, true); 
+                            else
+                            series.addPoint([x, y], true, false); 
+                        }                     
+                    }
+                });
+        }
+
 
         function createChart() {
             chart = new Highcharts.Chart({
@@ -19,29 +61,6 @@ block content
                     marginRight: 10,
                     global: {
                         useUTC: true   
-                    },
-                    events: {
-                        load: function () {
-                            var series = this.series[0];
-                            setInterval(function () {                           
-                                $.ajax({
-                                    url: "/RealTimeData",
-                                    type: "get",
-                                    data:{id:123},
-                                    dataType: "json",
-                                    cache: false,
-                                    success: function (data) {                                                                   
-                                          var x = data.dt;
-                                          var y = data.num;
-                                          if(series.data.length >= 20)
-                                            series.addPoint([x, y], true, true); 
-                                          else
-                                           series.addPoint([x, y], true, false); 
-                                    }
-                                });
-
-                            }, 1000);
-                        }
                     }
                 },              
                 title: {
@@ -51,8 +70,7 @@ block content
                     text: '!{chartSubTile}'
                 },
                 xAxis: {
-                    type: 'datetime',
-                    //tickPixelInterval: 150        
+                    type: 'datetime' 
                 },
                 yAxis: {
                     title: {

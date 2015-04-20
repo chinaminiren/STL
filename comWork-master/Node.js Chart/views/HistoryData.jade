@@ -1,36 +1,173 @@
 ﻿extends layout
-
-
+block scripts
+ script(src='/js/My97DatePicker/WdatePicker.js')    
 block content
- div.row-fluid
-   div.box-content#tbContent
-     h2
-     - var ar = array;
+  div.container
+    .row
+      .col-sm-8
+       p
+  div.container
+    div.row
+      div.col-sm-8
+     - var ar = gamearray;
      - for (var i in ar) {
-       button.btn.btn-link(type="button",onclick="showChart(#{ar[i].GameID},'#{ar[i].GameName}')") #{ar[i].GameName} 
+         button.btn.btn-primary(id ='#{ar[i].GameID}',type="button",onclick="showChart(#{ar[i].GameID},'#{ar[i].GameName}')") #{ar[i].GameName} 
+         lable &nbsp;
      -}
-     
-   div#container(style="min-width: 500px; height: 500px; margin: 0 auto")
-        
+      p
+  .container
+   .row
+    .col-sm-10
+      form.form-inline(role="form", autocomplete="off")
+        .form-group
+          select.form-control(name = "selector",onchange="TimeSelect()")
+            option(value = 24) 24小时
+            option(value = 48) 48小时
+            option(value = 72) 72小时
+        lable &nbsp;
+        .form-group
+          input.form-control#sDate(type="text", placeholder="选择日期", onclick="new WdatePicker")
+        lable &nbsp;
+        button.btn.btn-info(type="button", onclick="SearchData()") 查询    
+        lable &nbsp;
+        button.btn.btn-info(type="button",onclick = "BtnExportData()") 批量数据导出 
+  .container
+   .row-fluid
+     #container
+   #dataModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+         .modal-content
+           .modal-header
+             button.close(type='button', data-dismiss='modal', aria-hidden='true')
+               | ×
+             h4#myModalLabel.modal-title
+               | 数据导出
+           .modal-body
+            form.form-horizontal(role='form')
+              .form-group
+                label.col-sm-2.control-label(for='beginDate') 开始日期:
+                .col-sm-4
+                  input#beginDate.form-control(type='text', required='',onclick="new WdatePicker", placeholder='请输入开始日期')
+              .form-group
+                label.col-sm-2.control-label(for='endDate') 结束日期:
+                .col-sm-4
+                  input#endDate.form-control(type='text', required='', placeholder='请输入结束日期',onclick="new WdatePicker")
+           .modal-footer
+             button.btn.btn-default(type='button', data-dismiss='modal')
+               | 关闭
+             button.btn.btn-primary(type='button' onclick = "ExportData()")
+               | 确定
+  
   script.
       $(document).ready(function () {
             var chart;
             createChart();
+            TimeFlag = 24;  
+
+            GameID = -1;
         });
-         function showChart(gameID,gameName) {
-                            var series = chart.series[0];         
-                                $.ajax({
-                                    url: "/GetHistoryData",
-                                    data:{ id: gameID},
-                                    type: "get",
-                                    dataType: "text",
-                                    success: function (data) {
-                                        var json = eval('(' + data + ')');                                        
-                                        series.setData(json);
-                                      chart.setTitle({text: gameName + ' 历史在线人数'});
-                                    }
-                                });
+
+        function TimeSelect()
+        {
+           TimeFlag = $('select[name=selector]').val()
+           //
+        }
+         
+         function BtnExportData()
+         {
+            if(GameID <= 0)
+            {
+               alert('请选择区域');
+               return;
+            }
+             $('#dataModal').modal('show');
+         }
+
+         function ExportData()
+         {
+              var beginDateStr = $('#beginDate').val();
+              var endDateStr = $('#endDate').val();
+
+               if(beginDateStr && endDateStr && GameID > 0)
+               {
+                   var beginDate =  new Date(beginDateStr);
+                   var endDate = new Date(endDateStr);
+                   if(beginDate && endDate)
+                   {
+                       var btime = beginDate.getTime();
+                       var etime = endDate.getTime();
+
+                        var time = etime - btime;  
+                        var diffDay = parseInt(time / (1000 * 60 * 60 * 24));  
+
+                        if(diffDay > 30 || diffDay <= 0)
+                        {
+                          return;
                         }
+                         $('#dataModal').modal('hide');
+                         window.open('/DownExcelData?beginDate='+btime+'&endDate='+etime+'&gameID='+GameID+'');
+                   }
+               }
+               else
+               {
+             
+               }
+         }
+
+         function SearchData(){
+
+         if(GameID <= 0)
+            {
+               alert('请选择区域');
+               return;
+            }
+
+           var beginDateStr = $('#sDate').val();
+
+           if(beginDateStr && GameID > 0)
+           {
+               var beginDate =  new Date(beginDateStr);
+               if(beginDate)
+               {
+                    var timeRefer = (TimeFlag * 60 * 60 * 1000) / 2;
+                    var beginTime = beginDate.getTime() - timeRefer;
+                    var endTime = beginDate.getTime() + timeRefer;
+                    GetData(beginTime,endTime);
+               }
+           }
+           else
+           {
+              
+           }
+         }
+         
+         function GetData(beginDateTime,endDateTime)
+         {
+             if(GameID > 0)
+             {
+                var series = chart.series[0];    
+                    chart.xAxis[0].setExtremes(beginDateTime,endDateTime);       
+                    $.ajax({
+                        url: "/GetHistoryData",
+                        data:{ id: GameID,beginDateTime:beginDateTime,endDateTime:endDateTime},
+                        type: "get",
+                        cache: false,
+                        dataType: "json",
+                        success: function (data) {                                
+                            series.setData(data.data);   
+                            chart.setTitle(null, { text: data.showTips});
+                                          
+                        }
+                    });
+             }
+         }
+
+         function showChart(gameID,gameName) {  
+            GameID = gameID;
+             chart.setTitle({text: gameName + ' 历史在线人数'});
+             var series = chart.series[0];  
+              series.setData([]);     
+            }
 
         function createChart() {
             chart = new Highcharts.Chart({
@@ -39,30 +176,20 @@ block content
                     type: 'spline',
                     marginRight: 10,
                     global: {
-                        useUTC: false  
-                    },
-                    events: {
-                        load: function () {
-                            var series = this.series[0];                     
-                                $.ajax({
-                                    url: "/GetHistoryData",
-                                    type: "get",
-                                    dataType: "text",
-                                    success: function (data) {                                       
-                                    }
-                                });
-                        }
+                        useUTC: true  
                     }
                 },              
                 title: {
                     text: '!{chartTile}'
                 },
+               subtitle: {
+                 text: ''
+                 },
                 subtitle: {
                     text: '!{chartSubTile}'
                 },
                 xAxis: {
-                    type: 'datetime',
-                    //tickPixelInterval: 150        
+                    type: 'datetime'
                 },
                 yAxis: {
                     title: {

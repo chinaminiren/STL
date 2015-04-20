@@ -3,6 +3,8 @@
  * Module dependencies.
  */
 
+//--http://www.hcharts.cn/api/index.php#xAxis.tickInterval
+
 var express = require('express');
 // 首先引入 express-session 这个模块
 var session = require('express-session');
@@ -11,6 +13,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser')
+var staticFavicon = require('static-favicon');
 
 var routes = require('./routes');
 var http = require('http');
@@ -27,12 +30,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('view options', { compileDebug: true });
 app.set('view options', { pretty: true });
-//app.use(express.favicon());
+app.use(staticFavicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 
 app.use(session({
     secret: config.secret, // 建议使用 128 个字符的随机字符串
@@ -50,13 +52,14 @@ if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
 
-//每次登陆 都会有session 信息 --TODO 应该优化掉 登录成功才有session
+//每次登陆 都会有session 信息 用于保存临时用户登录 随机密钥
 app.get('/LoginPage', routes.loginPage); //登录页面
 app.post('/loginAction', routes.loginAction); //用户密码登录
 app.get('/logoutAction', routes.logoutAction); //用户注销
 
 app.use(require('./control/site').auth_user); // 添加这个中间件，用来解析cookie
 
+app.post('/ChangePasswd', routes.ChangePasswd);
 app.get('/IndexPage', routes.indexPage); //主页
 
 app.get('/HistoryDataPage', routes.HistoryDataPage);
@@ -64,6 +67,11 @@ app.get('/OnlineDataPage', routes.OnlineDataPage);
 
 app.get('/RealTimeData', routes.RealTimeData);
 app.get('/GetHistoryData', routes.GetHistoryData);
+app.get('/DownExcelData', routes.DownExcelData)
+
+app.use("*", function (req, res) {
+    res.sendFile(__dirname + '/common/404.html');
+});   
 
 http.createServer(app).listen(config.port, function () {
     console.log('Express server listening on port ' + config.port);

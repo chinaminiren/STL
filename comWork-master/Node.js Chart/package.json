@@ -10,17 +10,19 @@
   "dependencies": {
     "body-parser": "*",
     "cookie-parser": "*",
-    "cookie-session": "^1.1.0",
     "errorhandler": "*",
     "express": "^4.*",
     "express-session": "*",
     "jade": "*",
+    "moment": "*",
     "morgan": "*",
     "mysql": "*",
     "node-mysql": "^0.4.2",
     "serve-favicon": "*",
+    "static-favicon": "*",
     "stylus": "*",
-    "superagent": "*",
-    "moment": "*"
+    "superagent": "^1.2.0",
+    "async": "*",
+    "excel-export": "*"
   }
 }

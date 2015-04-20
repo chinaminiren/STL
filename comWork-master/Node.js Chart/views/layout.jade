@@ -9,8 +9,9 @@ html
     script(src='/javascripts/modernizr-2.6.2.js')
     script(src='/javascripts/jquery-1.10.2.js')
     script(src='/javascripts/highcharts.js')
+    script(src='/javascripts/jquery.cookie.js')
   body
-    .navbar.navbar-inverse.navbar-fixed-top
+    .navbar.navbar-default.navbar-fixed-top
       .container
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
@@ -26,6 +27,45 @@ html
               a(href='/OnlineDataPage') 实时在线人数
             li
               a(href='/HistoryDataPage') 历史在线人数
+           ul.nav.pull-right
+            li.dropdown
+              a.dropdown-toggle(data-toggle="dropdown", href="#")  #{loginName}        
+                strong.caret
+              ul.dropdown-menu
+                li
+                  a(href="/logoutAction") 注销
+                li
+                  a(href="#" data-toggle="modal" data-target="#myModal") 修改密码
+
+     #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+       .modal-dialog
+         .modal-content
+           .modal-header
+             button.close(type='button', data-dismiss='modal', aria-hidden='true')
+               | ×
+             h4#myModalLabel.modal-title
+               | 修改密码
+           .modal-body
+            form.form-horizontal(role='form')
+              .form-group
+                label.col-sm-2.control-label(for='oldpasswd') 当前密码:
+                .col-sm-4
+                  input#oldpasswd.form-control(type='password', required='', placeholder='请输入当前密码')
+              .form-group
+                label.col-sm-2.control-label(for='newpasswd') 新密码:
+                .col-sm-4
+                  input#newpasswd.form-control(type='password', required='', placeholder='请输入新密码')
+              .form-group
+                label.col-sm-2.control-label(for='conpasswd') 确认密码:
+                .col-sm-4
+                  input#conpasswd.form-control(type='password', required='', placeholder='请输入新密码')
+
+           .modal-footer
+             button.btn.btn-default(type='button', data-dismiss='modal')
+               | 关闭
+             button.btn.btn-primary(type='button' onclick = "ChangePasswd()")
+               | 提交更改
+
     .container.body-content
       block content
       hr
@@ -34,5 +74,44 @@ html
 
     script(src='/javascripts/bootstrap.js')
     script(src='/javascripts/respond.js')
-     script(src='/javascripts/jquery-1.10.2.min.js')
     block scripts
+
+script.
+      function ChangePasswd()
+      {
+            var oldpasswd = $('#oldpasswd').val();
+            var newpasswd = $('#newpasswd').val();
+            var conpasswd = $('#conpasswd').val();
+            if( !oldpasswd || !newpasswd || !conpasswd)
+            {
+                return;
+            }
+            if(newpasswd != conpasswd)
+            {
+               return;
+            }
+
+             $.ajax({
+                        url: "/ChangePasswd",
+                        data:{ oldpasswd: oldpasswd,newpasswd:newpasswd},
+                        type: "post",
+                        dataType: "text",
+                        success: function (data) {
+                            var result = eval('(' + data + ')');
+                            if(result == 0)
+                            {
+                                alert('修改成功');
+                                $('#myModal').modal('hide');
+                            }
+                            else 
+                            {
+                                $('#oldpasswd').val("");
+                                   $('#newpasswd').val("");
+                                      $('#conpasswd').val("");
+                                alert('修改失败');
+
+                            }
+                        }
+                    });
+      }
+    

@@ -1,8 +1,9 @@
 ﻿{
     "secret": "b76dc8f65af949308d5b9758c7fc68a7417d1add9df54991b92bfa130ba3de2d6e7f34fa19604ac1bfeed2c3b824cd7b",
-    "port": "3000", 
+    "port": "3000",
     "ip": "192.168.3.12",
     "LoginUrlApi": "http://localhost:51041/Login.ashx",
+    "ChangePasswd": "http://localhost:51041/DataHandler.ashx",
     "connection": {
         "host": "127.0.0.1",
         "user": "root",
@@ -11,6 +12,10 @@
     },
     "GameZone": 
     [
+        {
+            "GameID": 0,
+            "GameName": "全部"
+        },
         {
             "GameID": 123,
             "GameName": "TT区域"
