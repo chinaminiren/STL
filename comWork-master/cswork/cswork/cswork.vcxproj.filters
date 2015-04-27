@@ -31,6 +31,9 @@
     <Filter Include="RBTree">
       <UniqueIdentifier>{bddb82d5-0414-4c37-8bfe-fca9feff1786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LeetCode">
+      <UniqueIdentifier>{f7a60553-b01d-4b2f-86ae-8d89a78ef108}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="OSTree.h">
       <Filter>O-STree</Filter>
     </ClInclude>
+    <ClInclude Include="TwoSum.h">
+      <Filter>LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -71,5 +77,8 @@
     <ClCompile Include="RBTree.cpp">
       <Filter>RBTree</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
   </ItemGroup>
 </Project>
